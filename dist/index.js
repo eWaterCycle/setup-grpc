@@ -1339,7 +1339,7 @@ function installGrpcVersion(versionSpec) {
         ]);
         const extPath = "grpc";
         core_1.info(`Configuring in ${extPath}`);
-        const buildDir = path_1.default.join(extPath, "cmake", "build");
+        const buildDir = path_1.default.join(extPath, "build");
         yield io_1.mkdirP(buildDir);
         // TODO Install into tool-cache with output/envars for later cmake with CMAKE_PREFIX_PATH
         const prefixDir = "/usr/local";

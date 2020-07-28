@@ -19,7 +19,7 @@ async function installGrpcVersion(versionSpec: string) {
 
   const extPath = "grpc";
   info(`Configuring in ${extPath}`);
-  const buildDir = path.join(extPath, "cmake", "build");
+  const buildDir = path.join(extPath, "build");
   await mkdirP(buildDir);
   // TODO Install into tool-cache with output/envars for later cmake with CMAKE_PREFIX_PATH
   const prefixDir = "/usr/local";
