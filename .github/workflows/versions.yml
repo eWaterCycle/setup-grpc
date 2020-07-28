@@ -32,7 +32,7 @@ jobs:
           cd grpc/examples/cpp/helloworld
           mkdir build
           cd build
-          cmake ../..
+          cmake ..
           make -j 2
         shell: bash
 

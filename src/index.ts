@@ -1,7 +1,7 @@
 import path from "path";
 import { cpus } from "os";
 
-import { info, getInput, setFailed } from "@actions/core";
+import { info, getInput, setFailed, exportVariable, addPath } from "@actions/core";
 import { exec } from "@actions/exec";
 import { mkdirP } from "@actions/io";
 
@@ -43,6 +43,9 @@ async function installGrpcVersion(versionSpec: string) {
   info(`Installing to ${prefixDir}`);
   await exec("sudo make install", [], { cwd: buildDir });
   await exec("sudo ldconfig", []);
+
+  // exportVariable('CMAKE_PREFIX_PATH', prefixDir);
+  // addPath(path.join(prefixDir, 'bin'));
 
   return prefixDir;
 }
