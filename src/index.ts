@@ -31,7 +31,7 @@ async function installGrpcVersion(versionSpec: string) {
       "-DgRPC_BUILD_TESTS=OFF",
       "-DBUILD_SHARED_LIBS=ON",
       `-DCMAKE_INSTALL_PREFIX=${prefixDir}`,
-      "../..",
+      "..",
     ],
     { cwd: buildDir }
   );
