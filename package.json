@@ -1,0 +1,30 @@
+{
+  "name": "setup-grpc",
+  "version": "1.0.0",
+  "description": "To compile C++ code against gRPC in a workflow you need to install it first. This GitHub action compiles and installs it for you.",
+  "main": "lib/index.js",
+  "scripts": {
+    "format": "prettier --write **/*.ts",
+    "format-check": "prettier --check **/*.ts",
+    "build": "tsc && ncc build"
+  },
+  "keywords": [
+    "actions",
+    "grpc",
+    "protobuf",
+    "setup"
+  ],
+  "author": "Stefan Verhoeven",
+  "license": "Apache-2.0",
+  "devDependencies": {
+    "@zeit/ncc": "^0.22.3",
+    "prettier": "^2.0.5",
+    "typescript": "^3.9.7"
+  },
+  "dependencies": {
+    "@actions/core": "^1.2.4",
+    "@actions/github": "^4.0.0",
+    "@actions/io": "^1.0.2",
+    "@actions/tool-cache": "^1.6.0"
+  }
+}

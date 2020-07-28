@@ -1,0 +1,14 @@
+name: 'Setup singularity'
+description: 'Setup gRPC C++ environment'
+author: Stefan Verhoeven
+inputs:
+  grpc-version:
+    description: Version of grpc to setup
+    required: false
+    default: 1.30.0
+runs:
+  using: 'node12'
+  main: 'dist/index.js'
+branding:
+  icon: box
+  color: blue
