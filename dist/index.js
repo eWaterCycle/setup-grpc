@@ -1357,8 +1357,8 @@ function installGrpcVersion(versionSpec) {
         core_1.info(`Installing to ${prefixDir}`);
         yield exec_1.exec("sudo make install", [], { cwd: buildDir });
         yield exec_1.exec("sudo ldconfig", []);
-        core_1.exportVariable('CMAKE_PREFIX_PATH', prefixDir);
-        core_1.addPath(path_1.default.join(prefixDir, 'bin'));
+        core_1.exportVariable("CMAKE_PREFIX_PATH", prefixDir);
+        core_1.addPath(path_1.default.join(prefixDir, "bin"));
         return prefixDir;
     });
 }

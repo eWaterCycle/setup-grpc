@@ -50,8 +50,8 @@ async function installGrpcVersion(versionSpec: string) {
   await exec("sudo make install", [], { cwd: buildDir });
   await exec("sudo ldconfig", []);
 
-  exportVariable('CMAKE_PREFIX_PATH', prefixDir);
-  addPath(path.join(prefixDir, 'bin'));
+  exportVariable("CMAKE_PREFIX_PATH", prefixDir);
+  addPath(path.join(prefixDir, "bin"));
 
   return prefixDir;
 }
