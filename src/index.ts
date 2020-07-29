@@ -1,5 +1,5 @@
 import path from "path";
-import { cpus } from "os";
+import { cpus, arch } from "os";
 
 import {
   info,
@@ -10,6 +10,14 @@ import {
 } from "@actions/core";
 import { exec } from "@actions/exec";
 import { mkdirP } from "@actions/io";
+import {
+  downloadTool,
+  extractTar,
+  find,
+  IToolRelease,
+  getManifestFromRepo,
+  findFromManifest,
+} from "@actions/tool-cache";
 
 function addEnvPath(name: string, value: string) {
   if (name in process.env) {
@@ -17,6 +25,28 @@ function addEnvPath(name: string, value: string) {
   } else {
     exportVariable(name, value);
   }
+}
+
+const TOKEN = getInput("token");
+const AUTH = `token ${TOKEN}`;
+const MANIFEST_REPO_OWNER = "eWaterCycle";
+const MANIFEST_REPO_NAME = "grpc-versions";
+
+async function findReleaseFromManifest(
+  semanticVersionSpec: string,
+  architecture: string
+): Promise<IToolRelease | undefined> {
+  const manifest: IToolRelease[] = await getManifestFromRepo(
+    MANIFEST_REPO_OWNER,
+    MANIFEST_REPO_NAME,
+    AUTH
+  );
+  return await findFromManifest(
+    semanticVersionSpec,
+    true,
+    manifest,
+    architecture
+  );
 }
 
 async function installGrpcVersion(versionSpec: string) {
@@ -58,10 +88,6 @@ async function installGrpcVersion(versionSpec: string) {
   info(`Installing to ${prefixDir}`);
   await exec("make install", [], { cwd: buildDir });
 
-  addPath(path.join(prefixDir, "bin"));
-  addEnvPath("CMAKE_PREFIX_PATH", prefixDir);
-  addEnvPath("LD_LIBRARY_PATH", path.join(prefixDir, "lib"));
-
   return prefixDir;
 }
 
@@ -69,7 +95,28 @@ async function main() {
   const versionSpec = getInput("grpc-version");
   info(`Setup grpc version spec ${versionSpec}`);
 
-  await installGrpcVersion(versionSpec);
+  let installDir = find("grpc", versionSpec);
+  if (installDir) {
+    info(`Found in cache @ ${installDir}`);
+  } else {
+    info(`Version ${versionSpec} was not found in the local cache`);
+    const foundRelease = await findReleaseFromManifest(versionSpec, arch());
+    if (foundRelease && foundRelease.files && foundRelease.files.length > 0) {
+      info(`Version ${versionSpec} is available for downloading`);
+      const downloadUrl = foundRelease.files[0].download_url;
+      info(`Download from "${downloadUrl}"`);
+      const archive = await downloadTool(downloadUrl, undefined, AUTH);
+      info("Extract downloaded archive");
+      installDir = await extractTar(archive);
+    } else {
+      info("Unable to download binary, falling back to compiling grpc");
+      installDir = await installGrpcVersion(versionSpec);
+    }
+  }
+  addPath(path.join(installDir, "bin"));
+  addEnvPath("CMAKE_PREFIX_PATH", installDir);
+  addEnvPath("LD_LIBRARY_PATH", path.join(installDir, "lib"));
+
   info(`Successfully setup grpc version ${versionSpec}`);
 }
 

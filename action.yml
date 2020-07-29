@@ -6,6 +6,10 @@ inputs:
     description: Version of grpc to setup
     required: false
     default: 1.30.2
+  token:
+    description: Used to pull grpc distributions from eWaterCycle/grpc-versions. Since there's a default, this is typically not supplied by the user.
+    required: false
+    default: ${{ github.token }}
 runs:
   using: 'node12'
   main: 'dist/index.js'

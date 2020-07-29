@@ -13,7 +13,7 @@ gRPC C++ environment is installed into `$AGENT_TOOLSDIRECTORY/grpc/<grpc-version
 * The lib directory is added to LD_LIBRARY_PATH env
 * The install directory is added to the `CMAKE_PREFIX_PATH` env var
 * Installation includes protobuf installation
-* Besides C++ grpc plugin, plugins for Node, PHP, Python, Ruby are made, when those languages are available
+* Besides C++ grpc plugin, plugins for Node, PHP, Python, Ruby are made
 
 ## Inputs
 
@@ -28,7 +28,7 @@ steps:
 - uses: actions/checkout@v2
 - uses: eWaterCycle/setup-grpc@v1
   with:
-    grpc-version: 1.27.2
+    grpc-version: 1.30.2
 ```
 
 ## Build
