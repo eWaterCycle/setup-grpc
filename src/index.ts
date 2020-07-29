@@ -17,6 +17,7 @@ import {
   IToolRelease,
   getManifestFromRepo,
   findFromManifest,
+  cacheDir,
 } from "@actions/tool-cache";
 
 function addEnvPath(name: string, value: string) {
@@ -107,8 +108,14 @@ async function main() {
       info(`Download from "${downloadUrl}"`);
       const archive = await downloadTool(downloadUrl, undefined, AUTH);
       info("Extract downloaded archive");
-      installDir = await extractTar(archive);
-      info(`Version @ ${installDir}`);
+      const extPath = await extractTar(archive);
+      info('Adding to the cache ...');
+      installDir = await cacheDir(
+        extPath,
+        'grpc',
+        versionSpec
+      );
+      info(`Successfully cached grpc to ${installDir}`);
     } else {
       info("Unable to download binary, falling back to compiling grpc");
       installDir = await installGrpcVersion(versionSpec);
