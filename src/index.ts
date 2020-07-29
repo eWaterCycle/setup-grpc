@@ -108,6 +108,7 @@ async function main() {
       const archive = await downloadTool(downloadUrl, undefined, AUTH);
       info("Extract downloaded archive");
       installDir = await extractTar(archive);
+      info(`Version @ ${installDir}`);
     } else {
       info("Unable to download binary, falling back to compiling grpc");
       installDir = await installGrpcVersion(versionSpec);

@@ -3429,6 +3429,7 @@ function main() {
                 const archive = yield tool_cache_1.downloadTool(downloadUrl, undefined, AUTH);
                 core_1.info("Extract downloaded archive");
                 installDir = yield tool_cache_1.extractTar(archive);
+                core_1.info(`Version @ ${installDir}`);
             }
             else {
                 core_1.info("Unable to download binary, falling back to compiling grpc");
