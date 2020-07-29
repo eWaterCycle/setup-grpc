@@ -1,4 +1,4 @@
-name: 'Setup singularity'
+name: 'Setup gRPC'
 description: 'Setup gRPC C++ environment'
 author: Stefan Verhoeven
 inputs:
