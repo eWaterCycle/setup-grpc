@@ -6,6 +6,15 @@
 
 To compile C++ code against gRPC in a workflow you need to install it first. This GitHub action compiles and installs it for you.
 
+Installation follows [gRPC build instructions](https://github.com/grpc/grpc/blob/master/BUILDING.md).
+gRPC C++ environment is installed into `$AGENT_TOOLSDIRECTORY/grpc/<grpc-version>` directory.
+
+* The bin directory is added to the PATH env var
+* The lib directory is added to LD_LIBRARY_PATH env
+* The install directory is added to the `CMAKE_PREFIX_PATH` env var
+* Installation includes protobuf installation
+* Besides C++ grpc plugin, plugins for Node, PHP, Python, Ruby are made, when those languages are available
+
 ## Inputs
 
 ### `grpc-version`

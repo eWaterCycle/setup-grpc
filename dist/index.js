@@ -1325,6 +1325,14 @@ const os_1 = __webpack_require__(87);
 const core_1 = __webpack_require__(470);
 const exec_1 = __webpack_require__(986);
 const io_1 = __webpack_require__(1);
+function addEnvPath(name, value) {
+    if (name in process.env) {
+        core_1.exportVariable(name, `${process.env[name]}${path_1.default.delimiter}${value}`);
+    }
+    else {
+        core_1.exportVariable(name, value);
+    }
+}
 function installGrpcVersion(versionSpec) {
     return __awaiter(this, void 0, void 0, function* () {
         core_1.info("Cloning grpc repo...");
@@ -1333,6 +1341,7 @@ function installGrpcVersion(versionSpec) {
             "--depth",
             "1",
             "--recurse-submodules",
+            "--shallow-submodules",
             "-b",
             "v" + versionSpec,
             "https://github.com/grpc/grpc",
@@ -1341,8 +1350,8 @@ function installGrpcVersion(versionSpec) {
         core_1.info(`Configuring in ${extPath}`);
         const buildDir = path_1.default.join(extPath, "build");
         yield io_1.mkdirP(buildDir);
-        // TODO Install into tool-cache with output/envars for later cmake with CMAKE_PREFIX_PATH
-        const prefixDir = "/usr/local";
+        const hostedtoolcache = process.env.AGENT_TOOLSDIRECTORY;
+        const prefixDir = path_1.default.join(hostedtoolcache, "grpc", versionSpec);
         yield exec_1.exec("cmake", [
             "-DgRPC_INSTALL=ON",
             "-DgRPC_SSL_PROVIDER=package",
@@ -1355,10 +1364,10 @@ function installGrpcVersion(versionSpec) {
         const jn = os_1.cpus().length.toString();
         yield exec_1.exec("make", ["-j", jn], { cwd: buildDir });
         core_1.info(`Installing to ${prefixDir}`);
-        yield exec_1.exec("sudo make install", [], { cwd: buildDir });
-        yield exec_1.exec("sudo ldconfig", []);
-        core_1.exportVariable("CMAKE_PREFIX_PATH", prefixDir);
+        yield exec_1.exec("make install", [], { cwd: buildDir });
         core_1.addPath(path_1.default.join(prefixDir, "bin"));
+        addEnvPath("CMAKE_PREFIX_PATH", prefixDir);
+        addEnvPath("LD_LIBRARY_PATH", path_1.default.join(prefixDir, "lib"));
         return prefixDir;
     });
 }

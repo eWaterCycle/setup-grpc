@@ -11,6 +11,14 @@ import {
 import { exec } from "@actions/exec";
 import { mkdirP } from "@actions/io";
 
+function addEnvPath(name: string, value: string) {
+  if (name in process.env) {
+    exportVariable(name, `${process.env[name]}${path.delimiter}${value}`);
+  } else {
+    exportVariable(name, value);
+  }
+}
+
 async function installGrpcVersion(versionSpec: string) {
   info("Cloning grpc repo...");
   await exec("git", [
@@ -18,6 +26,7 @@ async function installGrpcVersion(versionSpec: string) {
     "--depth",
     "1",
     "--recurse-submodules",
+    "--shallow-submodules",
     "-b",
     "v" + versionSpec,
     "https://github.com/grpc/grpc",
@@ -27,8 +36,8 @@ async function installGrpcVersion(versionSpec: string) {
   info(`Configuring in ${extPath}`);
   const buildDir = path.join(extPath, "build");
   await mkdirP(buildDir);
-  // TODO Install into tool-cache with output/envars for later cmake with CMAKE_PREFIX_PATH
-  const prefixDir = "/usr/local";
+  const hostedtoolcache = process.env.AGENT_TOOLSDIRECTORY!;
+  const prefixDir = path.join(hostedtoolcache, "grpc", versionSpec);
   await exec(
     "cmake",
     [
@@ -47,11 +56,11 @@ async function installGrpcVersion(versionSpec: string) {
   await exec("make", ["-j", jn], { cwd: buildDir });
 
   info(`Installing to ${prefixDir}`);
-  await exec("sudo make install", [], { cwd: buildDir });
-  await exec("sudo ldconfig", []);
+  await exec("make install", [], { cwd: buildDir });
 
-  exportVariable("CMAKE_PREFIX_PATH", prefixDir);
   addPath(path.join(prefixDir, "bin"));
+  addEnvPath("CMAKE_PREFIX_PATH", prefixDir);
+  addEnvPath("LD_LIBRARY_PATH", path.join(prefixDir, "lib"));
 
   return prefixDir;
 }
