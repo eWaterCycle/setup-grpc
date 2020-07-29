@@ -13,14 +13,14 @@ on:
     - cron: 0 0 * * *
 
 jobs:
-  setup-versions:
+  setup-versions-from-manifest:
     name: Setup ${{ matrix.grpc }} ${{ matrix.os }}
     runs-on: ${{ matrix.os }}
     strategy:
       fail-fast: false
       matrix:
-        os: [ubuntu-latest]
-        grpc: [1.30.2]
+        os: [ubuntu-18.04, ubuntu-20.04]
+        grpc: [1.30.2, 1.27.2]
     steps:
       - uses: actions/checkout@v2
       - name: Setup gRPC
@@ -36,3 +36,4 @@ jobs:
           cmake ..
           make -j 2 VERBOSE=1
         shell: bash
+  # TODO add job for testing local build
