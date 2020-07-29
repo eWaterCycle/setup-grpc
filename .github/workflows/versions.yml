@@ -29,8 +29,8 @@ jobs:
           grpc-version: ${{ matrix.grpc }}
       - name: Verify gRPC
         run: |
-          svn export https://github.com/grpc/grpc/trunk/examples/cpp/helloworld
-          cd helloworld
+          svn export https://github.com/grpc/grpc/tags/v${{ matrix.grpc }}/examples
+          cd examples/cpp/helloworld
           mkdir build
           cd build
           cmake ..
