@@ -29,10 +29,10 @@ jobs:
           grpc-version: ${{ matrix.grpc }}
       - name: Verify gRPC
         run: |
-          cd grpc/examples/cpp/helloworld
+          svn export https://github.com/grpc/grpc/trunk/examples/cpp/helloworld
+          cd helloworld
           mkdir build
           cd build
           cmake ..
           make -j 2
         shell: bash
-
