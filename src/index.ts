@@ -109,12 +109,8 @@ async function main() {
       const archive = await downloadTool(downloadUrl, undefined, AUTH);
       info("Extract downloaded archive");
       const extPath = await extractTar(archive);
-      info('Adding to the cache ...');
-      installDir = await cacheDir(
-        extPath,
-        'grpc',
-        versionSpec
-      );
+      info("Adding to the cache ...");
+      installDir = await cacheDir(extPath, "grpc", versionSpec);
       info(`Successfully cached grpc to ${installDir}`);
     } else {
       info("Unable to download binary, falling back to compiling grpc");

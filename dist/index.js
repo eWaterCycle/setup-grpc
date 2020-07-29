@@ -3428,8 +3428,10 @@ function main() {
                 core_1.info(`Download from "${downloadUrl}"`);
                 const archive = yield tool_cache_1.downloadTool(downloadUrl, undefined, AUTH);
                 core_1.info("Extract downloaded archive");
-                installDir = yield tool_cache_1.extractTar(archive);
-                core_1.info(`Version @ ${installDir}`);
+                const extPath = yield tool_cache_1.extractTar(archive);
+                core_1.info("Adding to the cache ...");
+                installDir = yield tool_cache_1.cacheDir(extPath, "grpc", versionSpec);
+                core_1.info(`Successfully cached grpc to ${installDir}`);
             }
             else {
                 core_1.info("Unable to download binary, falling back to compiling grpc");
