@@ -34,5 +34,5 @@ jobs:
           mkdir build
           cd build
           cmake ..
-          make -j 2
+          make -j 2 VERBOSE=1
         shell: bash
