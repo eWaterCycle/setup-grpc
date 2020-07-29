@@ -3437,6 +3437,7 @@ function main() {
             }
         }
         core_1.addPath(path_1.default.join(installDir, "bin"));
+        core_1.exportVariable("GRPC_ROOT", installDir);
         addEnvPath("CMAKE_PREFIX_PATH", installDir);
         addEnvPath("LD_LIBRARY_PATH", path_1.default.join(installDir, "lib"));
         core_1.info(`Successfully setup grpc version ${versionSpec}`);

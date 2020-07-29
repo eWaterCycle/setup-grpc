@@ -115,6 +115,7 @@ async function main() {
     }
   }
   addPath(path.join(installDir, "bin"));
+  exportVariable("GRPC_ROOT", installDir);
   addEnvPath("CMAKE_PREFIX_PATH", installDir);
   addEnvPath("LD_LIBRARY_PATH", path.join(installDir, "lib"));
 
