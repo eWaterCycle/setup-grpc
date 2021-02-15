@@ -19,7 +19,7 @@ Installation follows [gRPC build instructions](https://github.com/grpc/grpc/blob
 
 ### `grpc-version`
 
-Version of gRPC. See [releases page](https://github.com/hpcng/grpc/releases) for available versions. If a binary build of a version is available on [https://github.com/eWaterCycle/grpc-versions/releases](https://github.com/eWaterCycle/grpc-versions/releases) it is used otherwise the version is build during the action, which takes significantly longer. Versions lower then 3.6 need additional OS packages installed like `uuid-dev`.
+Version of gRPC. See [releases page](https://github.com/grpc/grpc/releases) for available versions. If a binary build of a version is available on [https://github.com/eWaterCycle/grpc-versions/releases](https://github.com/eWaterCycle/grpc-versions/releases) it is used otherwise the version is build during the action, which takes significantly longer. Versions lower then 3.6 need additional OS packages installed like `uuid-dev`.
 
 ## Example usage
 
