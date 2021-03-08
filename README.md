@@ -26,7 +26,7 @@ Version of gRPC. See [releases page](https://github.com/grpc/grpc/releases) for 
 ```yaml
 steps:
 - uses: actions/checkout@v2
-- uses: eWaterCycle/setup-grpc@v3
+- uses: eWaterCycle/setup-grpc@v4
   with:
     grpc-version: 1.30.2
 ```

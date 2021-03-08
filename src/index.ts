@@ -32,6 +32,7 @@ const TOKEN = getInput("token");
 const AUTH = `token ${TOKEN}`;
 const MANIFEST_REPO_OWNER = "eWaterCycle";
 const MANIFEST_REPO_NAME = "grpc-versions";
+const MANIFEST_REPO_BRANCH = "main";
 
 async function findReleaseFromManifest(
   semanticVersionSpec: string,
@@ -40,7 +41,8 @@ async function findReleaseFromManifest(
   const manifest: IToolRelease[] = await getManifestFromRepo(
     MANIFEST_REPO_OWNER,
     MANIFEST_REPO_NAME,
-    AUTH
+    AUTH,
+    MANIFEST_REPO_BRANCH
   );
   return await findFromManifest(
     semanticVersionSpec,

@@ -3435,9 +3435,10 @@ const TOKEN = core_1.getInput("token");
 const AUTH = `token ${TOKEN}`;
 const MANIFEST_REPO_OWNER = "eWaterCycle";
 const MANIFEST_REPO_NAME = "grpc-versions";
+const MANIFEST_REPO_BRANCH = "main";
 function findReleaseFromManifest(semanticVersionSpec, architecture) {
     return __awaiter(this, void 0, void 0, function* () {
-        const manifest = yield tool_cache_1.getManifestFromRepo(MANIFEST_REPO_OWNER, MANIFEST_REPO_NAME, AUTH);
+        const manifest = yield tool_cache_1.getManifestFromRepo(MANIFEST_REPO_OWNER, MANIFEST_REPO_NAME, AUTH, MANIFEST_REPO_BRANCH);
         return yield tool_cache_1.findFromManifest(semanticVersionSpec, true, manifest, architecture);
     });
 }
