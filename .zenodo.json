@@ -1,0 +1,12 @@
+{
+    "keywords": [
+        "github",
+        "action",
+        "grpc",
+        "setup"
+    ],
+    "license": {
+        "id": "Apache-2.0"
+    },
+    "title": "GitHub Action to setup gRPC"
+}
