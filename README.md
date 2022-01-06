@@ -2,7 +2,7 @@
 
 ![CI](https://github.com/eWaterCycle/setup-grpc/workflows/build-test/badge.svg)
 ![Validate versions](https://github.com/eWaterCycle/setup-grpc/workflows/Validate%20'setup-grpc'/badge.svg)
-[![DOI](https://zenodo.org/badge/DOI/10.5281/zenodo.3964180.svg)](https://doi.org/10.5281/zenodo.3964180)
+[![DOI](https://zenodo.org/badge/DOI/10.5281/zenodo.5825192.svg)](https://doi.org/10.5281/zenodo.5825192)
 
 To compile C++ code against gRPC in a GitHub action workflow you need to install it first. This GitHub action compiles or downloads it for you.
 

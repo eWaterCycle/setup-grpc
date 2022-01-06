@@ -18,6 +18,6 @@ repository-code: "https://github.com/eWaterCycle/setup-grpc"
 title: setup-grpc
 identifiers:
   - type: doi
-    value: 10.5281/zenodo.3964180
+    value: 10.5281/zenodo.5825192
     description: Concept DOI
 ...
