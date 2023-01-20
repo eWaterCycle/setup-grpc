@@ -28,7 +28,7 @@ steps:
 - uses: actions/checkout@v3
 - uses: eWaterCycle/setup-grpc@v5
   with:
-    grpc-version: 1.48.2
+    grpc-version: 1.51.1
 ```
 
 ## Contributing

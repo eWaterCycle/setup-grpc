@@ -20,7 +20,7 @@ jobs:
       fail-fast: false
       matrix:
         os: [ubuntu-20.04, ubuntu-22.04]
-        grpc: [1.47.3, 1.48.2, 15.1]
+        grpc: [1.47.3, 1.48.2, 1.51.1]
         include:
           # Not available for ubuntu-22.04
           - os: ubuntu-20.04
