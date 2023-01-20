@@ -6,7 +6,7 @@
   "scripts": {
     "format": "prettier --write **/*.ts",
     "format-check": "prettier --check **/*.ts",
-    "build": "tsc && ncc build"
+    "build": "tsc && ncc build --license license.txt"
   },
   "keywords": [
     "actions",

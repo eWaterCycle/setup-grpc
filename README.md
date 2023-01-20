@@ -25,24 +25,13 @@ Version of gRPC. See [releases page](https://github.com/grpc/grpc/releases) for 
 
 ```yaml
 steps:
-- uses: actions/checkout@v2
+- uses: actions/checkout@v3
 - uses: eWaterCycle/setup-grpc@v5
   with:
     grpc-version: 1.48.2
 ```
 
-## Build
+## Contributing
 
-For developers of setup-grpc action.
-
-Install deps with
-
-```bash
-npm install
-```
-
-Build dist with
-
-```bash
-npm run build
-```
+If you want to contribute to the development of apptainer-setup action,
+have a look at the [contribution guidelines](CONTRIBUTING.md).
