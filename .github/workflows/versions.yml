@@ -20,7 +20,7 @@ jobs:
       fail-fast: false
       matrix:
         os: [ubuntu-22.04, ubuntu-20.04]
-        grpc: [1.30.2, 1.27.2, 1.46.6]
+        grpc: [1.30.2, 1.27.2, 1.48.2]
     steps:
       - uses: actions/checkout@v3
       - name: Setup gRPC
