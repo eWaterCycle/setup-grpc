@@ -19,6 +19,13 @@ import {
   findFromManifest,
   cacheDir,
 } from "@actions/tool-cache";
+import { cacheGrpcInstallation, restoreGrpcInstallation } from "./utils";
+
+const TOKEN = getInput("token");
+const AUTH = `token ${TOKEN}`;
+const MANIFEST_REPO_OWNER = "eWaterCycle";
+const MANIFEST_REPO_NAME = "grpc-versions";
+const MANIFEST_REPO_BRANCH = "main";
 
 function addEnvPath(name: string, value: string) {
   if (name in process.env) {
@@ -27,12 +34,6 @@ function addEnvPath(name: string, value: string) {
     exportVariable(name, value);
   }
 }
-
-const TOKEN = getInput("token");
-const AUTH = `token ${TOKEN}`;
-const MANIFEST_REPO_OWNER = "eWaterCycle";
-const MANIFEST_REPO_NAME = "grpc-versions";
-const MANIFEST_REPO_BRANCH = "main";
 
 async function findReleaseFromManifest(
   semanticVersionSpec: string,
@@ -96,7 +97,14 @@ async function installGrpcVersion(versionSpec: string) {
 
 async function main() {
   const versionSpec = getInput("grpc-version");
+
   info(`Setup grpc version spec ${versionSpec}`);
+
+  const isInstallationCached = await restoreGrpcInstallation(versionSpec);
+
+  if (isInstallationCached) {
+    return;
+  }
 
   let installDir = find("grpc", versionSpec);
   if (installDir) {
@@ -119,12 +127,15 @@ async function main() {
       installDir = await installGrpcVersion(versionSpec);
     }
   }
+
   addPath(path.join(installDir, "bin"));
   exportVariable("GRPC_ROOT", installDir);
   addEnvPath("CMAKE_PREFIX_PATH", installDir);
   addEnvPath("LD_LIBRARY_PATH", path.join(installDir, "lib"));
 
   info(`Successfully setup grpc version ${versionSpec}`);
+
+  await cacheGrpcInstallation(versionSpec);
 }
 
 main()
